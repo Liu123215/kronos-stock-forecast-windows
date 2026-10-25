@@ -1,0 +1,32 @@
+{
+  "Kronos-Tokenizer-base": {
+    "revision": "9ef143b98ee3c2488eebd85404e0c215c112b46a",
+    "sha256": "59d85f6af76a2c3b8240ea06cb21db4213b4eeca053f246b23e29cf832fc6bee",
+    "size_bytes": 15842368,
+    "source": "https://huggingface.co/NeoQuasar/Kronos-Tokenizer-base/commit/9ef143b98ee3c2488eebd85404e0c215c112b46a"
+  },
+  "Kronos-small": {
+    "revision": "ac5c409a313c4eadd1ca78201322f5cadb9c34ab",
+    "sha256": "b082dfcbd8e8c142a725c8bbb99781802f38fec81210e13479effb32b3c3e020",
+    "size_bytes": 98980656,
+    "source": "https://huggingface.co/NeoQuasar/Kronos-small/commit/ac5c409a313c4eadd1ca78201322f5cadb9c34ab"
+  },
+  "Kronos-Tokenizer-2k": {
+    "revision": "b22fb9cb30a2de2f77e8b617169cd756ba964a08",
+    "sha256": "b97ec46b3b72160509e289183eaf7bdf5f0dac5bb9b49522f6d46638a99a8717",
+    "size_bytes": 15842376,
+    "source": "https://huggingface.co/NeoQuasar/Kronos-Tokenizer-2k/commit/b22fb9cb30a2de2f77e8b617169cd756ba964a08"
+  },
+  "Kronos-mini": {
+    "revision": "7fdcc628d87f325ccdbcae0a372622ca7e6813aa",
+    "sha256": "a7d5f37e2e9fbd9891f7d7d4f72574512dd1f704fee14223e0a8cd0fbf54197c",
+    "size_bytes": 16440776,
+    "source": "https://huggingface.co/NeoQuasar/Kronos-mini/commit/7fdcc628d87f325ccdbcae0a372622ca7e6813aa"
+  },
+  "Kronos-base": {
+    "revision": "31afc02ed0a3cfaa1a97238c8b948d663e45b597",
+    "sha256": "abff193acab6db1a0368e9773e75799d11403b6d054ee6d5f0a11aeabc5f4b83",
+    "size_bytes": 409264008,
+    "source": "https://huggingface.co/NeoQuasar/Kronos-base/commit/31afc02ed0a3cfaa1a97238c8b948d663e45b597"
+  }
+}

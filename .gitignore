@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.kronos-runtime/
+.cache/
+model_files/
+results/
+logs/
+*.log
+*.safetensors
+*.incomplete
+.env
+.env.*
+*.pem
+*.key

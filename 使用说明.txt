@@ -1,0 +1,89 @@
+Kronos 自选股票预测 v2.2.0
+
+更新内容
+- v2.2.0更新界面：浅色/深色主题、工作台导航、成交量子图、MA20/MA60历史均线、实际行情概况和最近历史表格。
+- 均线、成交量和日涨跌只根据实际历史计算，不作为模型输入，也不混入预测数据。
+- 界面页脚保留原作者ShiYu的版权、MIT许可证与Kronos上游链接。
+- 模型可选Kronos-mini、Kronos-small、Kronos-base。
+- 默认请求最多5000根历史日线，支持浏览全部历史并导出CSV。
+- 分开设置“下载历史行情”和“本次预测输入”，显示实际下载/输入根数及日期范围。
+- 保留旧版股票切换、最新已收盘日线校验、官方/可选镜像下载和权重保存修复。
+
+启动与升级
+1. 关闭旧版运行窗口，把本ZIP完整解压到一个新文件夹。
+2. 双击START_KRONOS.cmd；原先使用第三方镜像的，可继续双击START_KRONOS_MIRROR.cmd。
+3. 确认网页底部版本为2.2.0。
+4. 输入沪深A股6位代码，选择Mini/Small/Base和预测天数。
+5. “下载历史行情”选择最多5000根；“本次预测输入”选择模型允许的日线长度。
+6. 点击“获取最新行情并预测”。结果中的“图表历史范围”可切换到“全部已下载历史”。
+
+无需删除旧项目、已下载权重或Hugging Face缓存，也无需重装Python。
+程序默认使用C:\AI\Kronos；无写权限时改用LOCALAPPDATA下Kronos目录，以启动窗口显示为准。
+保持运行窗口打开；Ctrl+C停止，之后双击同一CMD即可重启。
+
+历史长度与模型上限
+Mini原生上下文上限2048根，Small/Base上限512根。
+可选预测输入：128、256、400、512根；Mini另可选1024、1536、2048根。
+5000根历史用于浏览、导出和后续研究；本版不会把5000根同时送进原生模型，也不会静默截断后声称用了5000根。
+例如：下载5000根、输入512根、预测5天，表示保存最多5000根历史，只用最新512根预测未来5个交易日。
+本版不将日线改成周线，不改变预测周期，不执行微调或滚动回测。
+
+若股票上市较晚或接口覆盖不足，页面显示实际可用根数与起止日期，不补造数据。
+数据源先检查东方财富；根数不足或出错时检查腾讯，优先使用覆盖更多且最新的完整单一来源。
+腾讯长历史采用分段请求后排序去重；同一次历史不拼接不同数据源，也不混用前复权和未复权。
+历史要求真实OHLC、成交量及成交额。剔除无成交日；所有导出均保留实际日期。
+较早的前复权价格可能为非正数，保留其历史展示值；预测输入窗口必须全部为正价格，否则要求缩短窗口。
+
+三种导出
+- 导出预测CSV：未来交易日的预测收盘价及变化。
+- 导出全部历史CSV：本次下载的完整历史，最多5000根。
+- 导出预测输入CSV：实际送入模型的最近N根日线。
+图表范围仅改变显示，不会重新运行模型或改变预测输入。
+
+Base模型
+官方参数约102.3M，模型权重409264008字节（约409 MB）。使用Tokenizer-base，与Small共用分词器权重。
+第一次选择Base并预测时下载权重；本包未附带任何真实模型权重。
+Base在CPU上通常比Mini和Small更慢，内存占用更高；不会保证预测更准确。
+程序一次仅保留当前模型的推理器，切换模型复用磁盘权重。
+所有模型保持官方架构，完整配置随包提供，公开下载不使用API Key或HF令牌。
+
+网络与文件保存
+START_KRONOS.cmd使用Hugging Face官方站点。
+START_KRONOS_MIRROR.cmd明确使用hf-mirror.com第三方公益镜像，不是Hugging Face官方服务。
+二者都要求同一固定官方版本的大小和SHA256校验，不向镜像发送令牌。
+元数据等待至少60秒，读取超时至少300秒；临时失败最多重试3次，正常超时保留可续传缓存。
+优先复用已校验的本机文件和缓存；解析缓存真实文件后复制、刷盘、校验，再替换目标文件。
+不修改Windows全局代理、证书或安全设置。
+
+Base手动下载备用方式
+1. 分词器：https://huggingface.co/NeoQuasar/Kronos-Tokenizer-base/resolve/9ef143b98ee3c2488eebd85404e0c215c112b46a/model.safetensors
+   保存到：C:\AI\Kronos\model_files\Kronos-Tokenizer-base\model.safetensors
+2. Base：https://huggingface.co/NeoQuasar/Kronos-base/resolve/31afc02ed0a3cfaa1a97238c8b948d663e45b597/model.safetensors
+   保存到：C:\AI\Kronos\model_files\Kronos-base\model.safetensors
+   SHA256：abff193acab6db1a0368e9773e75799d11403b6d054ee6d5f0a11aeabc5f4b83
+配置目录由启动器自动准备。如果使用备用安装目录，以窗口显示的Model files folder为准。
+如需第三方镜像，以上链接仅把https://huggingface.co替换为https://hf-mirror.com；校验要求不变。
+
+预测口径
+使用最新已收盘日线，前复权、成交量为股、成交额为元。
+北京时间15:15后尝试纳入当日行情；周末节假日使用最近已收盘交易日。
+未来日期跳过周末及核实的休市日；日历核实至2026-12-31，超出后要求更新。
+采样设置沿用此前版本：固定随机种子42，3条预测路径取均值；重复结果不代表多次独立验证。
+更长输入、更多历史或更大模型都不保证更准确；窗口改变后方向可能相反。
+软件不连接券商、不执行交易，当前支持沪深A股日线；不支持港美股、ETF或分钟追踪。
+
+验证范围
+已检查Base官方配置与真实代码构造参数、固定权重大小和SHA256，以及Base配套分词器选择。
+开发验证覆盖5000根历史、输入窗口分离、模型上限、历史不足提示、分段请求、CSV导出、图表切换、旧版升级和此前保存/重试修复。
+开发测试使用独立的行情与模型替身，不放入运行包。
+本环境未完成真实Base权重下载、Windows安装及真实联网推理验证，仍需在你的电脑运行确认。
+
+来源与许可
+Kronos：https://github.com/shiyu-coder/Kronos
+核心固定提交：67b630e67f6a18c9e9be918d9b4337c960db1e9a，MIT许可，LICENSE随包。
+模型与上下文说明：https://github.com/shiyu-coder/Kronos#-model-zoo
+Base固定版本：https://huggingface.co/NeoQuasar/Kronos-base/commit/31afc02ed0a3cfaa1a97238c8b948d663e45b597
+行情字段参考AKShare官方实现及文档：https://akshare.akfamily.xyz/data/stock/stock.html
+2026年休市日：https://www.sse.com.cn/disclosure/announcement/general/c/c_20251222_10802507.shtml
+镜像说明：https://hf-mirror.com
+自选股票网页、行情适配器与启动器为本项目新增代码。

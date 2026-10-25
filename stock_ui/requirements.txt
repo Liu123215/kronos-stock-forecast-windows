@@ -1,0 +1,2 @@
+# Market data and the web server use the Python standard library.
+# The model core requirements are installed from the project root.
